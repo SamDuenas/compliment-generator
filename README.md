@@ -1,1 +1,1 @@
-# compliment-generator
+# glitchy-compliment-generator
