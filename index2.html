@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Compliment Generator</title>
+  <style>
+    body {
+      background: #111;
+      color: #fff;
+      font-family: monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    button {
+      background: #ff79c6;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    p {
+      margin-top: 30px;
+      font-size: 18px;
+      max-width: 500px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <button onclick="speakCompliment()">Get Compliment</button>
+  <p id="output"></p>
+
+  <script>
+    const compliments = [
+      "You have a brilliant mind.",
+      "Your energy is contagious.",
+      "You light up the room.",
+      "Your creativity is boundless.",
+      "You're an amazing friend.",
+      "You make people feel seen.",
+      "You're full of great ideas."
+    ];
+
+    function glitchText(text) {
+      const words = text.split(" ");
+      let glitched = [];
+
+      for (let word of words) {
+        const rand = Math.random();
+
+        if (rand < 0.2) {
+          glitched.push(word, word);
+        } else if (rand < 0.4) {
+          glitched.push(word.split("").reverse().join(""));
+        } else {
+          glitched.push(word);
+        }
+      }
+
+      if (Math.random() > 0.7) {
+        glitched.sort(() => Math.random() - 0.5);
+      }
+
+      return glitched.join(" ");
+    }
+
+    function speakCompliment() {
+      const base = compliments[Math.floor(Math.random() * compliments.length)];
+      const glitched = glitchText(base);
+
+      document.getElementById("output").textContent = glitched;
+
+      const utter = new SpeechSynthesisUtterance(glitched);
+      utter.pitch = 1 + Math.random();
+      utter.rate = 0.9 + Math.random() * 0.3;
+      speechSynthesis.speak(utter);
+    }
+  </script>
+</body>
+</html>
